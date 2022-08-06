@@ -1,15 +1,22 @@
+package consumidor;
+
 import main.Recepcao;
 
-public class Cliente {
+public class Cliente extends Thread {
     private Recepcao cadeiras;
 
-    public Cliente(Recepcao cadeiras) {
-        this.cadeiras = cadeiras;
+    public Cliente(Recepcao recepcao) {
+        this.cadeiras = recepcao;
     }
 
     @Override
     public void run() {
-        this.buffer.get();
-        System.out.println(Thread.currentThread().getName() + " cortou o cabelo");
+        try {
+            this.cadeiras.put(Thread.currentThread().getName());
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

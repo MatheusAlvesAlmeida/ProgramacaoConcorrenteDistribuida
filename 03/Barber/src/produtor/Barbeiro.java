@@ -1,16 +1,20 @@
 package produtor;
 
-import main.Buffer;
+import main.Recepcao;
 
 public class Barbeiro extends Thread {
-    private Buffer buffer;
+    private Recepcao cadeiras;
 
-    public Barbeiro(Buffer buffer) {
-        this.buffer = buffer;
+    public Barbeiro(Recepcao recepcao) {
+        this.cadeiras = recepcao;
     }
 
     @Override
     public void run() {
-        this.buffer.cortaCabelo();
+        try {
+            this.cadeiras.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

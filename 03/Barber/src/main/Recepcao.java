@@ -3,39 +3,47 @@ package main;
 import java.util.ArrayList;
 
 public class Recepcao {
-    private ArrayList<Integer> contents = new ArrayList<Integer>();
+    private int numberChairs;
+    private ArrayList<String> chairs;
 
-    public synchronized int get() {
-        while (this.contents.isEmpty()) {
-            System.out.println("Consumer: " + Thread.currentThread().getName() + " is waiting for data");
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                System.out.println("Consumer: " + Thread.currentThread().getName() + " was interrupted");
-            }
-        }
+    // CONDITIONS
+    // 1 - is full and the customer leaves
+    // 2 - the client wakes up the barber
+    // 3 - the barber is busy and the client goes to the waiting room
+    // 4 - there are no customers the barber sleeps
 
-        int value = this.contents.remove(this.contents.size() - 1);
-        System.out.println("Consumer: " + Thread.currentThread().getName() + " item consumed");
-        return value;
+    public Recepcao(int numberChairs) {
+        this.numberChairs = numberChairs;
+        this.chairs = new ArrayList<String>(this.numberChairs);
     }
 
-    public synchronized void put(int value) {
-        while (!this.contents.isEmpty()) {
-            System.out.println("Producer: " + Thread.currentThread().getName() + " is waiting for space");
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                System.out.println("Producer: " + Thread.currentThread().getName() + " was interrupted");
+    public synchronized int get() throws InterruptedException {
+        while (true) {
+            while (this.chairs.isEmpty()) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
+            String removedThread = this.chairs.remove(this.chairs.size() - 1);
+            System.out.println("Barber: " + removedThread + " cut hair");
+            Thread.sleep(1);
+        }
+    }
+
+    // method to add a client to the waiting room
+    public synchronized void put(String threadName) throws InterruptedException {
+        if (this.chairs.size() < this.numberChairs) {
+            this.chairs.add(threadName);
+            System.out.println("Barber: " + threadName + " is waiting");
+            notify();
+            Thread.sleep(1);
         }
 
-        int threadCount = Thread.activeCount() - 2; // disconsider main thread and itself
+        else
+            System.out.println("Barber: " + threadName + " left");
 
-        for (int i = 0; i < threadCount; i++)
-            this.contents.add(value);
-
-        System.out.println("Producer: " + Thread.currentThread().getName() + " item inserted");
-        notifyAll();
     }
 }
