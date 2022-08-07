@@ -12,7 +12,8 @@ public class Barbeiro extends Thread {
     @Override
     public void run() {
         try {
-            this.cadeiras.get();
+            System.out.println("Barber is sleeping");
+            this.cadeiras.cortarCabelo();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

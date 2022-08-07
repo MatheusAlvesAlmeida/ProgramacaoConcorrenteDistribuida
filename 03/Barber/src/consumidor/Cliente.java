@@ -12,7 +12,7 @@ public class Cliente extends Thread {
     @Override
     public void run() {
         try {
-            this.cadeiras.put(Thread.currentThread().getName());
+            this.cadeiras.desejoCortarCabelo(Thread.currentThread().getName());
 
         } catch (InterruptedException e) {
             e.printStackTrace();

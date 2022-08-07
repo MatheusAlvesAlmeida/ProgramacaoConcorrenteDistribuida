@@ -17,7 +17,7 @@ public class Recepcao {
         this.chairs = new ArrayList<String>(this.numberChairs);
     }
 
-    public synchronized int get() throws InterruptedException {
+    public synchronized int cortarCabelo() throws InterruptedException {
         while (true) {
             while (this.chairs.isEmpty()) {
                 try {
@@ -33,17 +33,14 @@ public class Recepcao {
         }
     }
 
-    // method to add a client to the waiting room
-    public synchronized void put(String threadName) throws InterruptedException {
+    public synchronized void desejoCortarCabelo(String threadName) throws InterruptedException {
         if (this.chairs.size() < this.numberChairs) {
             this.chairs.add(threadName);
             System.out.println("Barber: " + threadName + " is waiting");
             notify();
             Thread.sleep(1);
-        }
-
-        else
+        } else {
             System.out.println("Barber: " + threadName + " left");
-
+        }
     }
 }
