@@ -13,6 +13,6 @@ public class Producer extends Thread {
     @Override
     public void run() {
         randomNumber = (int) (Math.random() * 100);
-        this.buffer.put(randomNumber);
+        this.buffer.produzir(randomNumber);
     }
 }

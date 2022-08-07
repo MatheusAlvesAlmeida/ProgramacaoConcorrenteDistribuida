@@ -12,7 +12,7 @@ public class Consumer extends Thread {
     @Override
     public void run() {
         int randomNumber;
-        randomNumber = this.buffer.get();
+        randomNumber = this.buffer.consumir();
         System.out.println(Thread.currentThread().getName() + " consumed: " + randomNumber);
     }
 }

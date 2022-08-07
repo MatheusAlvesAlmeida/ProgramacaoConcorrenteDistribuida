@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Buffer {
     private ArrayList<Integer> contents = new ArrayList<Integer>();
 
-    public synchronized int get() {
+    public synchronized int consumir() {
         while (this.contents.isEmpty()) {
             System.out.println("Consumer: " + Thread.currentThread().getName() + " is waiting for data");
             try {
@@ -20,7 +20,7 @@ public class Buffer {
         return value;
     }
 
-    public synchronized void put(int value) {
+    public synchronized void produzir(int value) {
         while (!this.contents.isEmpty()) {
             System.out.println("Producer: " + Thread.currentThread().getName() + " is waiting for space");
             try {
