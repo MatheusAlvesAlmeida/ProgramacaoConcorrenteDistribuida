@@ -11,12 +11,11 @@ public class Cliente {
         String endereço = "localhost";
         double[] rtt = new double[10000];
         double tempoInicio = 0, tempoFim = 0, soma = 0, media = 0, somaDesvioPadrao = 0;
+        DatagramSocket clientSocket = new DatagramSocket(porta + Integer.parseInt(args[0]));
 
         for (int i = 0; i < 10000; i++) {
             tempoInicio = System.currentTimeMillis();
             // System.out.println("Teste " + i);
-
-            DatagramSocket clientSocket = new DatagramSocket();
             InetAddress ipServidor = InetAddress.getByName(endereço);
             DatagramPacket enviarPacote, receberPacote;
 
