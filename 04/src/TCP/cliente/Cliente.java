@@ -11,10 +11,10 @@ public class Cliente {
         for (int i = 0; i < 10000; i++) {
             tempoInicio = System.currentTimeMillis();
             Socket socket = new Socket("localhost", port);
-            System.out.println("Getting data...");
+            // System.out.println("Getting data...");
 
             DataInputStream input = new DataInputStream(socket.getInputStream());
-            System.out.println(input.readUTF());
+            // System.out.println(input.readUTF());
 
             socket.close();
             input.close();
