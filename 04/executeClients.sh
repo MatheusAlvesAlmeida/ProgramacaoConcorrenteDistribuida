@@ -1,3 +1,3 @@
-for run in {1..10}; do
-  java /home/gabriel/Documents/CIn/programacao_concorrente/ProgramacaoConcorrenteDistribuida/04/src/UDP/cliente/Cliente.java
+for run in {1..80}; do
+  java /home/gabriel/Documents/CIn/programacao_concorrente/ProgramacaoConcorrenteDistribuida/04/src/TCP/cliente/Cliente.java &
 done
