@@ -9,13 +9,14 @@ public class Cliente {
     public static void main(String[] args) throws IOException {
         int porta = 28886;
         String endereço = "localhost";
+
         double[] rtt = new double[10000];
         double tempoInicio = 0, tempoFim = 0, soma = 0, media = 0, somaDesvioPadrao = 0;
         DatagramSocket clientSocket = new DatagramSocket(porta + Integer.parseInt(args[0]));
 
         for (int i = 0; i < 10000; i++) {
             tempoInicio = System.currentTimeMillis();
-            // System.out.println("Teste " + i);
+            System.out.println("Teste " + i);
             InetAddress ipServidor = InetAddress.getByName(endereço);
             DatagramPacket enviarPacote, receberPacote;
 
@@ -28,7 +29,7 @@ public class Cliente {
 
             receberPacote = new DatagramPacket(receberDados, receberDados.length);
             clientSocket.receive(receberPacote);
-            // System.out.println(new String(receberPacote.getData()));
+            System.out.println(new String(receberPacote.getData()));
             tempoFim = System.currentTimeMillis();
             rtt[i] = tempoFim - tempoInicio;
         }
