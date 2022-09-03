@@ -6,15 +6,18 @@ import java.io.*;
 public class Cliente {
     public static void main(String args[]) throws IOException {
         int port = 28887;
+
         double[] rtt = new double[10000];
         double tempoInicio = 0, tempoFim = 0, soma = 0, media = 0, somaDesvioPadrao = 0;
+
         for (int i = 0; i < 10000; i++) {
             tempoInicio = System.currentTimeMillis();
             Socket socket = new Socket("localhost", port);
-            // System.out.println("Getting data...");
+
+            System.out.println("Getting data...");
 
             DataInputStream input = new DataInputStream(socket.getInputStream());
-            // System.out.println(input.readUTF());
+            System.out.println(input.readUTF());
 
             socket.close();
             input.close();

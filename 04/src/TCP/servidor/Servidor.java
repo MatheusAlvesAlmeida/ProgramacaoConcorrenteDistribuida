@@ -19,7 +19,6 @@ public class Servidor {
 
                 Thread thread = new Thread(new Task(socket));
                 thread.run();
-                socket.close();
             }
 
         } catch (IOException i) {
