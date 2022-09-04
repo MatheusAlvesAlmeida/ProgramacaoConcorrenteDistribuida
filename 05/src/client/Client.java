@@ -17,7 +17,7 @@ public class Client {
         double tempoInicio = 0, tempoFim = 0, tempoTotal = 0;
         // Create a new text file
         try {
-            File myObj = new File("RTTs.txt");
+            File myObj = new File("RTTs_80.txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -38,7 +38,7 @@ public class Client {
                 tempoTotal = tempoFim - tempoInicio;
                 System.out.println("Tempo de RTT: " + tempoTotal + "ms");
                 try {
-                    FileWriter fw = new FileWriter("RTTs.txt", true);
+                    FileWriter fw = new FileWriter("RTTs_80.txt", true);
                     BufferedWriter bw = new BufferedWriter(fw);
                     bw.write("" + tempoTotal);
                     bw.newLine();
