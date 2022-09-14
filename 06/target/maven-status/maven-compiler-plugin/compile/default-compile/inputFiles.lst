@@ -1,0 +1,10 @@
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/ConsumerExample.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/StreamsExample.java
+/home/tecs/06/target/generated-sources/io/confluent/examples/clients/cloud/DataRecordAvro.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/ConsumerExamplePageviews.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/ProducerAvroExample.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/StreamsAvroExample.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/model/PageviewRecord.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/ProducerExample.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/model/DataRecord.java
+/home/tecs/06/src/main/java/io/confluent/examples/clients/cloud/ConsumerAvroExample.java
