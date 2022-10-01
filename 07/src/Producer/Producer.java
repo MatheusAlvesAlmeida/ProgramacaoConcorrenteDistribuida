@@ -19,7 +19,7 @@ public class Producer {
                 channel.queueDeclare(QUEUE_NAME, false, false, false, null);
                 
                 for(int i = 0; i < 10000; i++){
-                    String message = "Client " + argv[0] + " message number " + Integer.toString(i);
+                    String message = "Producer " + argv[0] + " message number " + Integer.toString(i);
                     channel.basicPublish("", QUEUE_NAME, null, message.getBytes()); // uses a default exchange, identified by the empty string ("")
                     System.out.println(" [x] Sent '" + message + "'");
                 }                
