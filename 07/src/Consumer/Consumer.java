@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.IOException;
 
@@ -37,7 +38,7 @@ public class Consumer {
 
     public static void main(String[] argv) throws Exception {
         try {
-            File myObj = new File("consumer256.txt");
+            File myObj = new File("consumer5096.txt");
 
             if (myObj.createNewFile())
                 System.out.println("File created: " + myObj.getName());
@@ -60,11 +61,11 @@ public class Consumer {
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody());
-            String producerDateTime = split(message, "#")[1];
-            double diff = convertLocalDateTimeToCurrentTimeMillis(producerDateTime);
+            String producerDateTime = message.split("#")[1];
+            String diff = convertLocalDateTimeToCurrentTimeMillis(producerDateTime);
 
             try {
-                FileWriter fw = new FileWriter("consumer256.txt", true);
+                FileWriter fw = new FileWriter("consumer5096.txt", true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write(diff);
                 bw.newLine();

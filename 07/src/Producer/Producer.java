@@ -9,7 +9,7 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class Producer {
     private static final String QUEUE_NAME = "queue";
-    private static int bytesQtd = 256;
+    private static int bytesQtd = 5096;
 
     public static String getDatetime() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -22,10 +22,9 @@ public class Producer {
         factory.setHost("localhost");
 
         byte[] message = new byte[bytesQtd];
-        for (int i = 0; i < bytesQtd; i++) {
-            message[i] = "Producer " + argv[0] + " message number " + Integer.toString(i) + ": #["
-                    + Producer.getDatetime() + "]";
-        }
+        String newMessage = "Producer " + argv[0] + ": #"
+                + Producer.getDatetime();
+        message = newMessage.getBytes();
         try (Connection connection = factory.newConnection(); // abstracts the socket connection
                 Channel channel = connection.createChannel()) {
 
