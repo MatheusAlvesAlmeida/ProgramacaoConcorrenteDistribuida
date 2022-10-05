@@ -17,23 +17,17 @@ public class Consumer {
     private final static String QUEUE_NAME = "queue";
 
     public static String convertLocalDateTimeToCurrentTimeMillis(String date) {
-        // get current date time with LocalDateTime.now()
+        // get current date time with LocalDateTime.now() and format it
         LocalDateTime now = LocalDateTime.now();
-        // format it
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String formatDateTime = now.format(formatter);
+        
         // convert it to milliseconds
         long millis = now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         // subtract format date time from current date time
         long diff = millis
                 - LocalDateTime.parse(date, formatter).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         return String.valueOf(diff);
-    }
-
-    public static String getDatetime() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
     }
 
     public static void main(String[] argv) throws Exception {
@@ -50,6 +44,7 @@ public class Consumer {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
 
