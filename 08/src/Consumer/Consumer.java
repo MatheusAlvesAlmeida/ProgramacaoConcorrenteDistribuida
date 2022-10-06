@@ -14,16 +14,30 @@ public class Consumer {
 
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
-    
+        channel.basicQos(0);
+
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody());
-            System.out.println(" [x] Received '" + message + "'");
+            System.out.println(" '[x] Received '" + "messages. To exit press CTRL+C");
         };
-        channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
-    
-      }
-    
+
+        boolean autoAck = true;
+        channel.basicConsume(QUEUE_NAME, autoAck, deliverCallback, consumerTag -> {
+        }, new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag,
+                    Envelope envelope,
+                    AMQP.BasicProperties properties,
+                    byte[] body)
+                    throws IOException {
+                long deliveryTag = envelope.getDeliveryTag();
+                // positively acknowledge a single delivery, the message will
+                // be discarded
+                channel.basicAck(deliveryTag, false);
+            }
+        });
+    }
 }
