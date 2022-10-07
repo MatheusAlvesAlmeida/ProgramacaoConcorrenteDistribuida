@@ -6,4 +6,5 @@ export CP=.:amqp-client-5.7.1.jar:slf4j-api-1.7.26.jar:slf4j-simple-1.7.26.jar
 
 javac -cp amqp-client-5.7.1.jar Consumer/Consumer.java Producer/Producer.java
 
-java -cp $CP Consumer/Consumer
+export PREFETCHCOUNT=1
+java -cp $CP Consumer/Consumer $PREFETCHCOUNT

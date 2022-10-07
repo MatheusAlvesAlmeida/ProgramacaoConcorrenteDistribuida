@@ -31,9 +31,9 @@
         java -cp $CP Producer/Producer 0
     ```
 
-## Caso de estresse
+## Caso de Estresse
 
-- Rode o script que sobe o consumidor e baixa as bibliotecas:
+- Rode o script que sobe o consumidor e baixa as bibliotecas, alterando internamente o PREFETCHCOUNT:
     ```
     ./executeConsumer.sh    
     ```
