@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Server implements Table {
 
-  private String[] table = new String[5];
+  private String[] table;
   private String[] queue = new String[100];
 
   public Server() {}
@@ -20,6 +20,14 @@ public class Server implements Table {
       Registry registry = LocateRegistry.createRegistry(8888);
       registry.bind("Table", stub);
       System.err.println("Servidor pronto");
+      // Print table if it's not empty
+      if (obj.table != null) {
+        for (int i = 0; i < obj.table.length; i++) {
+          System.out.println("Cadeira: " + obj.table[i]);
+        }
+      } else {
+        System.out.println("Mesa vazia");
+      }
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());
       e.printStackTrace();
@@ -28,19 +36,32 @@ public class Server implements Table {
 
   @Override
   public String sit(String item) throws RemoteException {
-    if (table.length == 5) {
-      for (int i = 0; i < queue.length; i++) {
-        if (queue[i] == null) {
-          queue[i] = item;
+    // If table is empty, create it
+    if (this.table == null) {
+      this.table = new String[5];
+      // Add item to table
+      for (int i = 0; i < this.table.length; i++) {
+        if (this.table[i] == null) {
+          this.table[i] = item;
+          return "Sentado na cadeira " + i;
+        }
+      }
+    }
+    if (this.table[4] != null) {
+      for (int i = 0; i < this.queue.length; i++) {
+        if (this.queue[i] == null) {
+          this.queue[i] = item;
+          printTableAndQueue();
           return "Mesa cheia - " + item + " na fila";
         }
       }
+      printTableAndQueue();
       return "Mesa cheia e fila cheia";
     } else {
-      for (int i = 0; i < table.length; i++) {
-        if (table[i] == null) {
-          table[i] = item;
-          return "Item adicionado";
+      for (int i = 0; i < 5; i++) {
+        if (this.table[i] == null) {
+          this.table[i] = item;
+          return "Sentado na cadeira " + i;
         }
       }
     }
@@ -49,32 +70,48 @@ public class Server implements Table {
 
   @Override
   public String out() throws RemoteException {
-    if (queue.length == 0) {
+    if (this.queue.length == 0) {
       return "Mesa vazia";
     } else {
       for (int i = 0; i < table.length; i++) {
-        if (table[i] != null) {
-          table[i] = null;
+        if (this.table[i] != null) {
+          this.table[i] = null;
           // Get first item from queue and put it in table
-          table[i] = queue[0];
+          this.table[i] = this.queue[0];
           // Remove first item from queue
-          for (int j = 0; j < queue.length; j++) {
-            if (j == queue.length - 1) {
-              queue[j] = null;
+          for (int j = 0; j < this.queue.length; j++) {
+            if (j == this.queue.length - 1) {
+              this.queue[j] = null;
             } else {
-              queue[j] = queue[j + 1];
+              this.queue[j] = this.queue[j + 1];
             }
           }
-          return "Item removido da mesa" + " e " + table[i] + " adicionado";
+          printTableAndQueue();
+          return (
+            "Item removido da mesa" + " e " + this.table[i] + " adicionado"
+          );
         }
       }
     }
     return null;
   }
 
-  public void printQueue() throws RemoteException {
-    for (int i = 0; i < queue.length; i++) {
-      System.out.println(queue[i]);
+  public void printTableAndQueue() {
+    // Print table if it's not empty
+    if (this.table != null) {
+      for (int i = 0; i < this.table.length; i++) {
+        System.out.println("Cadeira: " + this.table[i]);
+      }
+    } else {
+      System.out.println("Mesa vazia");
+    }
+    // Print queue if it's not empty
+    if (this.queue != null) {
+      for (int i = 0; i < this.queue.length; i++) {
+        System.out.println("Fila: " + this.queue[i]);
+      }
+    } else {
+      System.out.println("Fila vazia");
     }
   }
 }

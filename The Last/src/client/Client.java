@@ -12,7 +12,7 @@ public class Client {
     try {
       Registry registry = LocateRegistry.getRegistry(8888);
       Table stub = (Table) registry.lookup("Table");
-      String response = stub.sit("Cliente " + args[0]);
+      String response = stub.sit("Cliente 1");
       System.out.println("response: " + response);
     } catch (Exception e) {
       System.err.println("Client exception: " + e.toString());
