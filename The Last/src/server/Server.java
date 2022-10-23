@@ -32,7 +32,7 @@ public class Server implements Table {
       for (int i = 0; i < queue.length; i++) {
         if (queue[i] == null) {
           queue[i] = item;
-          return "Mesa cheia";
+          return "Mesa cheia - " + item + " na fila";
         }
       }
       return "Mesa cheia e fila cheia";
