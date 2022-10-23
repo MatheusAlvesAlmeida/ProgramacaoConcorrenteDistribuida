@@ -12,6 +12,7 @@ public class Client {
     try {
       Registry registry = LocateRegistry.getRegistry(8888);
       Queue stub = (Queue) registry.lookup("Queue");
+      System.out.println(stub.isEmpty());
     } catch (Exception e) {
       System.err.println("Client exception: " + e.toString());
       e.printStackTrace();
