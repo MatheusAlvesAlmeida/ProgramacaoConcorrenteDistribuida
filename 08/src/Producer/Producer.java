@@ -29,6 +29,10 @@ public class Producer {
         byte[] message = new byte[1024];
         String newMessage = "Producer " + argv[0] + ": #"
                 + Producer.getDatetime();
+        //fill newMessage with 1024 bytes
+        for (int i = newMessage.length(); i < 1024; i++) {
+          message[i] = ' ';
+        }
         message = newMessage.getBytes();
         /* 
            ""                                      : indicates the use of a default exchange
