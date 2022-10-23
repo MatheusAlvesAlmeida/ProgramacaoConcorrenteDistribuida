@@ -43,6 +43,7 @@ public class Server implements Table {
       for (int i = 0; i < this.table.length; i++) {
         if (this.table[i] == null) {
           this.table[i] = item;
+          printTableAndQueue();
           return "Sentado na cadeira " + i;
         }
       }
@@ -105,13 +106,13 @@ public class Server implements Table {
     } else {
       System.out.println("Mesa vazia");
     }
-    // Print queue if it's not empty
-    if (this.queue != null) {
-      for (int i = 0; i < this.queue.length; i++) {
-        System.out.println("Fila: " + this.queue[i]);
+    // Print quantity of items in queue
+    int count = 0;
+    for (int i = 0; i < this.queue.length; i++) {
+      if (this.queue[i] != null) {
+        count++;
       }
-    } else {
-      System.out.println("Fila vazia");
     }
+    System.out.println(count + " itens na fila");
   }
 }
