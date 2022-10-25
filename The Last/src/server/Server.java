@@ -10,6 +10,7 @@ public class Server implements Table {
 
   private String[] table;
   private String[] queue = new String[100];
+  private boolean groupFormed = false;
 
   public Server() {}
 
@@ -28,6 +29,10 @@ public class Server implements Table {
       } else {
         System.out.println("Mesa vazia");
       }
+      while (true) {
+        Thread.sleep(5000);
+        removeRandomItemFromTable();
+      }
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());
       e.printStackTrace();
@@ -41,9 +46,12 @@ public class Server implements Table {
       this.table = new String[5];
       // Add item to table
       for (int i = 0; i < this.table.length; i++) {
-        if (this.table[i] == null) {
+        if (this.table[i] == null && !this.groupFormed) {
           this.table[i] = item;
           printTableAndQueue();
+          if (i == 4) {
+            this.groupFormed = true;
+          }
           return "Sentado na cadeira " + i;
         }
       }
@@ -69,34 +77,6 @@ public class Server implements Table {
     return item;
   }
 
-  @Override
-  public String out() throws RemoteException {
-    if (this.queue.length == 0) {
-      return "Mesa vazia";
-    } else {
-      for (int i = 0; i < table.length; i++) {
-        if (this.table[i] != null) {
-          this.table[i] = null;
-          // Get first item from queue and put it in table
-          this.table[i] = this.queue[0];
-          // Remove first item from queue
-          for (int j = 0; j < this.queue.length; j++) {
-            if (j == this.queue.length - 1) {
-              this.queue[j] = null;
-            } else {
-              this.queue[j] = this.queue[j + 1];
-            }
-          }
-          printTableAndQueue();
-          return (
-            "Item removido da mesa" + " e " + this.table[i] + " adicionado"
-          );
-        }
-      }
-    }
-    return null;
-  }
-
   public void printTableAndQueue() {
     // Print table if it's not empty
     if (this.table != null) {
@@ -114,5 +94,39 @@ public class Server implements Table {
       }
     }
     System.out.println(count + " itens na fila");
+  }
+
+  public void removeRandomItemFromTable() {
+    // If is group formed, remove all items from table
+    if (this.groupFormed) {
+      for (int i = 0; i < this.table.length; i++) {
+        this.table[i] = null;
+      }
+      this.groupFormed = false;
+      System.out.println("Grupo saiu, preenchendo mesa...");
+      printTableAndQueue();
+      // If table is empty, add items from queue to table
+      for (int i = 0; i < this.table.length; i++) {
+        if (this.queue[i] != null) {
+          this.table[i] = this.queue[i];
+          this.queue[i] = null;
+          System.out.println("Adicionando " + this.table[i] + " na mesa");
+        }
+      }
+      printTableAndQueue();
+    } else {
+      // Remove random item from table
+      int random = (int) (Math.random() * 5);
+      this.table[random] = null;
+      System.out.println("Item removido da mesa");
+      // Add item from queue to table
+      for (int i = 0; i < this.table.length; i++) {
+        if (this.table[i] == null && this.queue[i] != null) {
+          this.table[i] = this.queue[i];
+          this.queue[i] = null;
+          System.out.println("Adicionando " + this.table[i] + " na mesa");
+        }
+      }
+    }
   }
 }
