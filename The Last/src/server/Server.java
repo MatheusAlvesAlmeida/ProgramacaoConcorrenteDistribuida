@@ -31,7 +31,10 @@ public class Server implements Table {
       }
       while (true) {
         Thread.sleep(5000);
-        removeRandomItemFromTable();
+        // Call remove random method if table is not empty
+        if (obj.table != null) {
+          obj.removeRandomItemFromTable();
+        }
       }
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());
@@ -117,8 +120,10 @@ public class Server implements Table {
     } else {
       // Remove random item from table
       int random = (int) (Math.random() * 5);
-      this.table[random] = null;
-      System.out.println("Item removido da mesa");
+      if (this.table[random] != null) {
+        System.out.println("Removendo " + this.table[random] + " da mesa");
+        this.table[random] = null;
+      }
       // Add item from queue to table
       for (int i = 0; i < this.table.length; i++) {
         if (this.table[i] == null && this.queue[i] != null) {
