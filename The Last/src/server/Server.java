@@ -52,8 +52,9 @@ public class Server implements Table {
 
       this.table[0] = item;
       printTableAndQueue();
+
       return "Sentado na cadeira 0";
-      
+
     }
     if (this.table[4] != null) {
       for (int i = 0; i < this.queue.length; i++) {
@@ -63,9 +64,10 @@ public class Server implements Table {
           return "Mesa cheia - " + item + " na fila";
         }
       }
+
       printTableAndQueue();
       return "Mesa cheia e fila cheia";
-
+      
     } else {
       for (int i = 0; i < 5; i++) {
         if (this.table[i] == null) {
