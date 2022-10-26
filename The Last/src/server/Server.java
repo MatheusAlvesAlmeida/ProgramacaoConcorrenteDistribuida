@@ -49,16 +49,11 @@ public class Server implements Table {
     if (this.table == null) {
       this.table = new String[5];
       // Add item to table
-      for (int i = 0; i < this.table.length; i++) {
-        if (this.table[i] == null && !this.groupFormed) {
-          this.table[i] = item;
-          printTableAndQueue();
-          if (i == 4) {
-            this.groupFormed = true;
-          }
-          return "Sentado na cadeira " + i;
-        }
-      }
+
+      this.table[0] = item;
+      printTableAndQueue();
+      return "Sentado na cadeira 0";
+      
     }
     if (this.table[4] != null) {
       for (int i = 0; i < this.queue.length; i++) {
@@ -70,6 +65,7 @@ public class Server implements Table {
       }
       printTableAndQueue();
       return "Mesa cheia e fila cheia";
+
     } else {
       for (int i = 0; i < 5; i++) {
         if (this.table[i] == null) {
