@@ -12,7 +12,8 @@ public class Server implements Table {
   private String[] queue = new String[100];
   private boolean groupFormed = false;
 
-  public Server() {}
+  public Server() {
+  }
 
   public static void main(String args[]) {
     try {
@@ -114,6 +115,17 @@ public class Server implements Table {
           this.table[i] = this.queue[i];
           this.queue[i] = null;
           System.out.println("Adicionando " + this.table[i] + " na mesa");
+        }
+      }
+      // Check if group is formed
+      for (int i = 0; i < this.table.length; i++) {
+        if (this.table[i] == null) {
+          this.groupFormed = false;
+          break;
+        } else {
+          if (i == 4) {
+            this.groupFormed = true;
+          }
         }
       }
       printTableAndQueue();
