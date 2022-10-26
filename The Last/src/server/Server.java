@@ -134,14 +134,27 @@ public class Server implements Table {
       int random = (int) (Math.random() * 5);
       if (this.table[random] != null) {
         System.out.println("Removendo " + this.table[random] + " da mesa");
-        this.table[random] = null;
-      }
-      // Add item from queue to table
-      for (int i = 0; i < this.table.length; i++) {
-        if (this.table[i] == null && this.queue[i] != null) {
-          this.table[i] = this.queue[i];
-          this.queue[i] = null;
-          System.out.println("Adicionando " + this.table[i] + " na mesa");
+        // replace table[random] with first element from queue if queue is not empty
+        if (this.queue[0] != null) {
+          this.table[random] = this.queue[0];
+          this.queue[0] = null;
+          // Move all elements from queue to the left
+          for (int i = 0; i < this.queue.length - 1; i++) {
+            this.queue[i] = this.queue[i + 1];
+          }
+          // Check if group is formed
+          for (int i = 0; i < this.table.length; i++) {
+            if (this.table[i] == null) {
+              this.groupFormed = false;
+              break;
+            } else {
+              if (i == 4) {
+                this.groupFormed = true;
+              }
+            }
+          }
+        } else {
+          this.table[random] = null;
         }
       }
     }
